@@ -6,6 +6,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import WebDriverException
 import sys
 import signal
+import six
 
 
 class Plugin(object):
@@ -120,7 +121,7 @@ class Plugin(object):
             exc_class, exc, tb = sys.exc_info()
             new_exc = ConnectionException(
                 "Error connecting to Selenium server")
-            raise new_exc.__class__, new_exc, tb
+            six.reraise(new_exc.__class__, new_exc, tb)
 
     def init_driver(self):
         try:
@@ -129,7 +130,7 @@ class Plugin(object):
                 self.capabilities_mapping[self.args.browser])
         except Exception:
             exc_class, exc, tb = sys.exc_info()
-            raise DriverInitException, None, tb
+            six.reraise(DriverInitException, None, tb)
 
     def get_driver(self):
         """
@@ -209,7 +210,7 @@ class Plugin(object):
             if self.driver:
                 self.driver.quit()
 
-            print self.nagios_message
+            print(self.nagios_message)
             sys.exit(self.nagios_message.status_code)
 
 
