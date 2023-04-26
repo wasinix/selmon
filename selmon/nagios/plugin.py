@@ -55,9 +55,6 @@ class Plugin(object):
     capabilities_mapping = {
         'chrome': DesiredCapabilities.CHROME,
         'firefox': DesiredCapabilities.FIREFOX,
-        'android': DesiredCapabilities.ANDROID,
-        'phantomjs': DesiredCapabilities.PHANTOMJS,
-        'opera': DesiredCapabilities.OPERA,
         'htmlunit': DesiredCapabilities.HTMLUNIT,
         'htmlunit_withjs': DesiredCapabilities.HTMLUNITWITHJS,
         'ie': DesiredCapabilities.INTERNETEXPLORER,
