@@ -1,4 +1,8 @@
 # Selmon
+
+## Origin
+forked from objectified/selmon to get it working with Python3 and current selenium version
+
 ## Using Selenium Webdriver for Nagios Monitoring
 
 <em>Note: when upgrading from 0.1 to 0.2, expect the API to break. On the upside: the new API is more sane.</em>
@@ -20,7 +24,7 @@ DOM in the monitoring process
 implementation might change, but as long as the interface stays the same you're fine
 
 ### Requirements
-* Python (2.7)
+* Python 3
 * [Selenium Server](http://seleniumhq.org/download/) (this requires a compatible Java Runtime Environment to be installed)
 * [Nagios](http://www.nagios.org) (or something that uses Nagios under the hood, like [Opsview](https://www.opsview.com))
 * Appropriate browser drivers for use with the Selenium Server (for example: [ChromeDriver](https://code.google.com/p/selenium/wiki/ChromeDriver))
@@ -29,9 +33,9 @@ implementation might change, but as long as the interface stays the same you're 
 I'm assuming you're already somewhat familiar with Python and Nagios/NRPE. If you want to give Selmon a quick spin,
 you'll obviously need to install it. I prefer to use a virtualenv environment, I'm guessing you do too.
 
-    $ git clone https://github.com/objectified/selmon
+    $ git clone https://github.com/wasinix/selmon
     $ virtualenv selmon
-    $ cd selmon && source bin/activate
+    $ cd selmon
     $ python setup.py install
 
 The next step is to download Selenium Server, and the appropriate drivers for various browsers. and start it
