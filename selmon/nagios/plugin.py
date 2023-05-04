@@ -110,10 +110,15 @@ class Plugin(object):
             ','.join(
                 self.capabilities_mapping.keys()),
             required=True)
+        self.arg_parser.add_argument('-c', '--cert',
+                                     help='certificate bundle pem format, to verify TLS enc of host',
+                                     required=False)
 
     def init_connection(self):
         try:
             self.conn = RemoteConnection(self.args.host)
+            if self.args.cert:
+                self.conn.set_certificate_bundle_path(self.args.cert)
         except Exception:
             exc_class, exc, tb = sys.exc_info()
             new_exc = ConnectionException(

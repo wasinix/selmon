@@ -78,17 +78,16 @@ and asserts that there are results in the resulting response. First let's see ho
 permissions and run the following:
 
     $ ./selhq_monitor.py --help
-    usage: selhq_monitor.py [-h] -H HOST -t TIMEOUT -b BROWSER
+    usage: selhq_monitor.py [-h] -H HOST -t TIMEOUT -b BROWSER [-c CERT]
 
-    optional arguments:
+    options:
       -h, --help            show this help message and exit
       -H HOST, --host HOST  selenium webdriver remote host
       -t TIMEOUT, --timeout TIMEOUT
                             timeout in seconds to use for whole execution
       -b BROWSER, --browser BROWSER
-                            browser to use, possible values: firefox,htmlunit_with
-                            js,safari,ie,ipad,htmlunit,phantomjs,opera,chrome,ipho
-                            ne,android
+                            browser to use, possible values: chrome,firefox,htmlunit,htmlunit_withjs,ie,ipad,iphone,safari
+      -c CERT, --cert CERT  certificate bundle pem format, to verify TLS enc of host
 
 As you can see, the plugin we just created expects a few parameters.
 * -H specifies the Selenium Server address and port to use
@@ -97,6 +96,8 @@ As you can see, the plugin we just created expects a few parameters.
 * -b specifies which browser to use; for possible values, consult the help message. In order to use one of the listed
 browsers, you will need to plug the appropriate browser driver into the Selenium Server, and make sure the browser
 is available on the machine on which the Selenium Server runs
+* -c specify full path to certificate bundle (pem format) of your CA in case you are using encrypted connection (https) to Selenium Server 
+  with selfsigned certificate. Uses function set_certificate_bundle_path of remote_connection object from webdriver.
 
 We will go into details later, but first let's have a look at the script in action. Give the script execute permissions
 to run on its own, and execute it with the following parameters.
