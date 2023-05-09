@@ -100,3 +100,10 @@ class SelmonRemoteDriver(webdriver.Remote):
 
     def find_deferred_element_by_name(self, name, timeout=5):
         return self._find_deferred_element_by(name, By.NAME, timeout)
+
+    def deferred_title(self, title, timeout=5):
+        elem = WebDriverWait(self, timeout).until(
+            expected_conditions.title_is(title),
+            'Timeout occurred while waiting for title: %s' % title
+        )
+        return elem
