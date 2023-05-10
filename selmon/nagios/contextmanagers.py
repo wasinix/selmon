@@ -9,7 +9,7 @@ def benchmark(nagios_message, label, warning=3, critical=5):
     start_time = time.time()
     yield
     elapsed = time.time() - start_time
-    nagios_message.add_msg('%s executed in %s seconds' % (label, elapsed))
+    nagios_message.add_msg('%s executed in %s seconds' % (label, format(elapsed,".2f")))
     nagios_message.add_perfdata(
         label, NagiosMessage.UOM_SEC, elapsed,
         warning, critical
