@@ -7,6 +7,8 @@ from selenium.common.exceptions import WebDriverException
 import sys
 import signal
 import six
+from datetime import datetime
+import os
 
 
 class Plugin(object):
@@ -113,6 +115,9 @@ class Plugin(object):
         self.arg_parser.add_argument('-c', '--cert',
                                      help='certificate bundle pem format, to verify TLS enc of host',
                                      required=False)
+        self.arg_parser.add_argument('--screenshot_path',
+                                     help='if set, a final screenshot will be created at the end of the test in this path',
+                                     required=False)
 
     def init_connection(self):
         try:
@@ -209,6 +214,11 @@ class Plugin(object):
             self.nagios_message.raise_status(
                 NagiosMessage.NAGIOS_STATUS_UNKNOWN)
         finally:
+            try:
+                if self.driver and self.args.screenshot_path and os.path.isdir(self.args.screenshot_path):                
+                    self.driver.save_screenshot(self.args.screenshot_path + '/selenium_' + datetime.now().strftime("%Y%m%d_%H%M%S") +'.png')
+            except Exception:
+                pass
             if self.driver:
                 self.driver.quit()
 
