@@ -4,6 +4,7 @@ from selmon.nagios.selmonremotedriver import SelmonRemoteDriver
 from selenium.webdriver.remote.remote_connection import RemoteConnection
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.common.proxy import Proxy, ProxyType
 import sys
 import signal
 import six
@@ -118,6 +119,14 @@ class Plugin(object):
         self.arg_parser.add_argument('--screenshot_path',
                                      help='if set, a final screenshot will be created at the end of the test in this path',
                                      required=False)
+        self.arg_parser.add_argument('-p', '--proxy',
+                                     help='proxy server to use',
+                                     required=False)
+        self.arg_parser.add_argument('-n', '--no_proxy', action='append',
+                             help='urls, wildcards for which no proxy server should be used. \
+                                   Needs to be combined with "-p". \
+                                   Use multiple times for multiple exceptions.',
+                             required=False)
 
     def init_connection(self):
         try:
@@ -132,6 +141,14 @@ class Plugin(object):
 
     def init_driver(self):
         try:
+            if self.args.proxy:
+                prox = Proxy()
+                prox.proxy_type = ProxyType.MANUAL
+                prox.httpProxy = self.args.proxy
+                prox.sslProxy = self.args.proxy
+                if self.args.no_proxy:
+                    prox.noProxy = self.args.no_proxy
+                prox.add_to_capabilities(self.capabilities_mapping[self.args.browser])
             self.driver = SelmonRemoteDriver(
                 self.conn,
                 self.capabilities_mapping[self.args.browser])
