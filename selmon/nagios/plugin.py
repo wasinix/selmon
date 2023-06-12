@@ -127,6 +127,10 @@ class Plugin(object):
                                    Needs to be combined with "-p". \
                                    Use multiple times for multiple exceptions.',
                              required=False)
+        self.arg_parser.add_argument('--test_name',
+                             help='Will be added as se:name to capabilities and then shown in Grid UI instead of session id. \
+                                   Helps to identify different tests.',
+                             required=False)
 
     def init_connection(self):
         try:
@@ -149,6 +153,8 @@ class Plugin(object):
                 if self.args.no_proxy:
                     prox.noProxy = self.args.no_proxy
                 prox.add_to_capabilities(self.capabilities_mapping[self.args.browser])
+            if self.args.test_name:
+                self.capabilities_mapping[self.args.browser]["se:name"]=self.args.test_name
             self.driver = SelmonRemoteDriver(
                 self.conn,
                 self.capabilities_mapping[self.args.browser])
